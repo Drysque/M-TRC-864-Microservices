@@ -1,9 +1,15 @@
 import { BrowserRouter as Router, Redirect, Switch, Route } from 'react-router-dom';
 
-import { Home } from './pages/Home';
+import { Header } from 'components/Header';
+import { Home } from 'pages/Home';
+import { Profile } from 'pages/Profile';
+
+import { PrivateRoute } from './PrivateRoute';
 
 export const Routes = (): JSX.Element => (
   <Router>
+    <Header />
+
     <Switch>
       {/* <Route path="/auth">
             <AuthLayout>
@@ -20,7 +26,7 @@ export const Routes = (): JSX.Element => (
             </AuthLayout>
         </Route> */}
 
-      {/* <PrivateRoute path="/immobilier" component={Iroko} /> */}
+      <PrivateRoute path="/profile" component={Profile} />
       <Route exact path="/" component={Home} />
       <Redirect push to="/" />
     </Switch>
