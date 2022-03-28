@@ -1,0 +1,18 @@
+# Dependencies
+node_modules
+
+# yarn error logs
+yarn-error.log
+
+# Environment varibales
+.env*
+!.env*.example
+
+#Docker 
+.docker/logs
+.docker/mongodb/data/
+**/data
+# Code coverage
+coverage
+# mongo config
+mongod.conf

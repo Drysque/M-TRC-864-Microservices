@@ -1,0 +1,8 @@
+use node-boilerplate;
+db.files.insert(             { "filePath": "./file/default/", "fileName": "defaultProfilePicture.jpg", "fileType": "profilePicture", "originalFileName": "defaultProfilePicture.jpg", isDefaultProfilePicture: true, protected: true },         );
+use node-boilerplate;
+db.files.insert(             { "filePath": "./file/default/", "fileName": "defaultProfilePicture.jpg", "fileType": "profilePicture", "originalFileName": "defaultProfilePicture.jpg", isDefaultProfilePicture: true, protected: true },         );
+use node-boilerplate;
+db.files.insert(             { "filePath": "./file/default/", "fileName": "defaultProfilePicture.jpg", "fileType": "profilePicture", "originalFileName": "defaultProfilePicture.jpg", isDefaultProfilePicture: true, protected: true },         );
+use node-boilerplate;
+db.files.insert(             { "filePath": "./file/default/", "fileName": "defaultProfilePicture.jpg", "fileType": "profilePicture", "originalFileName": "defaultProfilePicture.jpg", isDefaultProfilePicture: true, protected: true },         );
