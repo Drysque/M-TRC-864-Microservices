@@ -9,9 +9,9 @@ services:
     volumes:
       - "./front:/app"
     ports:
-      - "4000:4000"
-    depends_on:
-      - back
+      - "3000:3000"
+    # depends_on:
+    #   - back
 
   # back:
   #   container_name: back
