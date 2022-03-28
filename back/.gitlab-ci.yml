@@ -1,0 +1,54 @@
+image: node:latest
+
+cache:
+  paths:
+    - node_modules/
+
+services:
+  - mongo
+
+variables:
+  #See https://github.com/docker-library/docker/pull/166
+  DOCKER_TLS_CERTDIR: ""
+
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  script:
+    - npm install
+  artifacts:
+    paths:
+      - node_modules/
+
+test:
+  image: docker/compose:latest
+  services:
+    - docker:dind
+  before_script:
+    - echo 'MONGO_INITDB_ROOT_USERNAME='$MONGO_INITDB_ROOT_USERNAME >> .env
+    - echo 'MONGO_INITDB_ROOT_PASSWORD='$MONGO_INITDB_ROOT_PASSWORD >> .env
+    - echo 'MONGO_INITDB_DATABASE='$MONGO_INITDB_DATABASE >> .env
+    - echo 'JWT_SECRET='$JWT_SECRET >> .env
+    - echo 'MONGODB_URL='$MONGODB_URL >> .env
+  script:
+    - docker-compose -f docker-compose.yml -f docker-compose.test.yml up --exit-code-from=node-app
+
+deploy:
+  image: alpine:latest
+  stage: deploy
+  tags:
+    - deployment
+  script:
+    - chmod og= $ID_RSA
+    - apk update && apk add openssh-client
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd EPITECH/main-api && ls -la && git pull && docker-compose stop && sudo docker-compose up --build -d"
+
+  environment:
+    name: production
+    url: $SERVER_IP
+  only:
+    - master
