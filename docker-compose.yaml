@@ -10,8 +10,8 @@ services:
       - "./front:/app"
     ports:
       - "3000:3000"
-    # depends_on:
-    #   - back
+    depends_on:
+      - back
 
   back:
     build:
