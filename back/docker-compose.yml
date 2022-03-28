@@ -14,26 +14,31 @@ services:
       - .:/usr/src/node-app
     networks:
       - node-network
+    env_file:
+      - ./back/.env
 
   mongodb-file-compression:
     image: mongo:latest
     container_name: mongodb-file-compression
     hostname: mongodb
     volumes:
-        - ./.docker/mongodb/mongod.conf:/etc/mongod.conf
-        - ./.docker/mongodb/data/db/:/data/db/
-        - ./.docker/mongodb:/home/mongodb
-        - ./script:/docker-entrypoint-initdb.d/
+        - ./back/.docker/mongodb/mongod.conf:/etc/mongod.conf
+        - ./back/.docker/mongodb/data/db/:/data/db/
+        - ./back/.docker/mongodb:/home/mongodb
+        - ./back/script:/docker-entrypoint-initdb.d/
+    env_file:
+      ./back/.env
     environment:
-        MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
-        MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
-        MONGO_INITDB_USERNAME: ${MONGO_INITDB_USERNAME}
-        MONGO_INITDB_PASSWORD: ${MONGO_INITDB_PASSWORD}
-        MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MONGO_INITDB_USERNAME: ${MONGO_INITDB_USERNAME}
+      MONGO_INITDB_PASSWORD: ${MONGO_INITDB_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
     ports:
         - "27017:27017"
     networks:
       - node-network
+
 
 volumes:
   dbdata:
