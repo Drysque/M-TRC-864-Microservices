@@ -86,17 +86,10 @@ module.exports = router;
  *                 format: password
  *                 minLength: 8
  *                 description: At least one number and one letter
- *               bio:
- *                 type: string
- *               birthDate:
- *                 type: string
- *                 format: date
  *             example:
  *               name: fake name
  *               email: fake@example.com
  *               password: password1
- *               bio: big
- *               birthDate: 02/01/1999
  *     responses:
  *       "200":
  *         description: OK
