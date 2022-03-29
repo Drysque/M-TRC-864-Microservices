@@ -9,7 +9,7 @@ services:
     volumes:
       - "./front:/app"
     ports:
-      - "4000:4000"
+      - "3000:3000"
     depends_on:
       - back
 
@@ -17,12 +17,10 @@ services:
     build:
       context: ./back
     image: node-file-compression
-    environment:
-      - MONGODB_URL=mongodb://mongodb:27017/node-file-compression
     ports:
       - '3001:3001'
     depends_on:
-      - mongodb-file-compression
+      - mongodb
     volumes:
       - ./back:/usr/src/node-app
     networks:
@@ -30,9 +28,9 @@ services:
     env_file:
       ./back/.env
 
-  mongodb-file-compression:
+  mongodb:
     image: mongo:latest
-    container_name: mongodb-file-compression
+    container_name: mongodb
     hostname: mongodb
     volumes:
         - ./back/.docker/mongodb/mongod.conf:/etc/mongod.conf
@@ -45,23 +43,6 @@ services:
       - node-network
     env_file:
       ./back/.env
-
-  # back:
-  #   container_name: back
-  #   image: node:16-alpine
-  #   working_dir: /app
-  #   command: yarn start
-  #   volumes:
-  #     - "./back:/app"
-  #   depends_on:
-  #     - image_compressor
-
-  # image_compressor:
-  #   container_name: image_compressor
-  #   image: mcr.microsoft.com/dotnet/sdk
-  #   working_dir: /app
-  #   volumes:
-  #     - "./image_compressor:/app"
 
 volumes:
   dbdata:
