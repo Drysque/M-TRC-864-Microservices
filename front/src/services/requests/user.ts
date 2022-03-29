@@ -11,4 +11,4 @@ const extendedApi = backendApi.injectEndpoints({
 	}),
 });
 
-export const { useGetUserQuery } = extendedApi;
+export const { useGetUserQuery, useLazyGetUserQuery } = extendedApi;

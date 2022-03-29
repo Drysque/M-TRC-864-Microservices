@@ -15,11 +15,13 @@ import {
 import { Link, useHistory } from 'react-router-dom';
 
 import { useLoginMutation } from 'services/requests/auth';
+import { useLazyGetUserQuery } from 'services/requests/user';
 
 export const Login = (): JSX.Element => {
 	const toast = useToast();
 	const history = useHistory();
 	const [login, { data, isLoading, isSuccess, error }] = useLoginMutation();
+	const [fetchUser] = useLazyGetUserQuery();
 
 	const [email, setEmail] = useState<string>('aa@aa.aaa');
 	const [password, setPassword] = useState<string>('aaaaaaaa1');
@@ -29,6 +31,7 @@ export const Login = (): JSX.Element => {
 		if (isLoading) return;
 		if (isSuccess && data) {
 			localStorage.setItem('token', data.tokens.access.token);
+			fetchUser();
 			history.push('/profile'); // force reload
 		} else if (error) {
 			if ('status' in error) {
@@ -39,7 +42,7 @@ export const Login = (): JSX.Element => {
 				});
 			}
 		}
-	}, [isSuccess, isLoading, data, error, toast, history]);
+	}, [isSuccess, isLoading, data, error, toast, history, fetchUser]);
 
 	const submit = () => login({ email, password });
 

@@ -5,22 +5,20 @@ import { PantoufleIcon } from 'assets/Pantoufle';
 import { useGetUserQuery } from 'services/requests/user';
 
 export const Header = (): JSX.Element => {
-	const { data: user, isLoading } = useGetUserQuery();
-
-	if (isLoading) return <></>;
+	const { data: user } = useGetUserQuery();
 
 	return (
 		<VStack w="100%" align="start">
 			<HStack w="100%" justify="space-between" bg="pantoufle.secondary" p="8px 16px">
 				<Box bg="white" border="base" borderRadius="15px">
-					<HStack m="5px 10px">
-						<PantoufleIcon w={12} h={10} fill="pantoufle.primary" />
-						<Link to="/">
+					<Link to="/">
+						<HStack m="5px 10px">
+							<PantoufleIcon w={12} h={10} fill="pantoufle.primary" />
 							<Text color="pantoufle.primary" fontSize="18px">
 								Pantoufle
 							</Text>
-						</Link>
-					</HStack>
+						</HStack>
+					</Link>
 				</Box>
 				{user ? (
 					<Link to="/profile">

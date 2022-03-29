@@ -15,11 +15,13 @@ import { ArrowForwardIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { Link, useHistory } from 'react-router-dom';
 
 import { useRegisterMutation } from 'services/requests/auth';
+import { useLazyGetUserQuery } from 'services/requests/user';
 
 export const Register = (): JSX.Element => {
 	const toast = useToast();
 	const history = useHistory();
 	const [register, { data, isLoading, isSuccess, error }] = useRegisterMutation();
+	const [fetchUser] = useLazyGetUserQuery();
 
 	const [email, setEmail] = useState<string>('aa@aa.aaa');
 	const [name, setName] = useState<string>('aaaaaaaa');
@@ -30,6 +32,7 @@ export const Register = (): JSX.Element => {
 		if (isLoading) return;
 		if (isSuccess && data) {
 			localStorage.setItem('token', data.tokens.access.token);
+			fetchUser();
 			history.push('/profile'); // force reload
 		} else if (error) {
 			if ('status' in error) {
@@ -40,7 +43,7 @@ export const Register = (): JSX.Element => {
 				});
 			}
 		}
-	}, [isSuccess, isLoading, data, error, toast, history]);
+	}, [isSuccess, isLoading, data, error, toast, history, fetchUser]);
 
 	const submit = () => register({ email, password, name });
 

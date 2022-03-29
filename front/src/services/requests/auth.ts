@@ -32,7 +32,6 @@ const extendedApi = backendApi.injectEndpoints({
 				method: 'POST',
 				body: params,
 			}),
-			invalidatesTags: ['User'],
 		}),
 		login: builder.mutation<AuthResponse, AuthLoginRequest>({
 			query: (params) => ({
@@ -40,7 +39,6 @@ const extendedApi = backendApi.injectEndpoints({
 				method: 'POST',
 				body: params,
 			}),
-			invalidatesTags: ['User'],
 		}),
 	}),
 });
