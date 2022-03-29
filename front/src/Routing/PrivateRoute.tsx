@@ -1,20 +1,21 @@
 import { Redirect, Route } from 'react-router-dom';
 
+import { useGetUserQuery } from 'services/requests/user';
+
 interface PrivateRouteProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component: (...args: any[]) => JSX.Element;
-  [propName: string]: unknown;
+  [key: string]: unknown;
 }
 
-export const PrivateRoute = (props: PrivateRouteProps): JSX.Element => {
-  const { component: Component, ...rest } = props;
-  const isAuth = true;
+export const PrivateRoute = ({ component: Component, ...rest }: PrivateRouteProps): JSX.Element => {
+	const { data: user } = useGetUserQuery();
 
   return (
     <Route
       {...rest}
       render={(routeProps) =>
-        isAuth ? <Component {...routeProps} /> : <Redirect push to="/" />
+        user ? <Component {...routeProps} /> : <Redirect push to="/" />
       }
     />
   );
