@@ -5,6 +5,7 @@ const catchAsync = require('../utils/catchAsync');
 const { fileService } = require('../services');
 
 const uploadFile = catchAsync(async (req, res) => {
+  console.log(req.files);
   res.status(httpStatus.OK).send({});
 });
 

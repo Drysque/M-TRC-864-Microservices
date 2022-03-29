@@ -1,5 +1,26 @@
 components:
   schemas:
+    Post:
+      type: object
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        user:
+          type: string
+        comments:
+          type: array
+          items:
+            type: string
+        addedTimestamp:
+          type: string
+          format: date-time
+      example:
+        title: Yop
+        description: cc à tous
+        user: 5ebac534954b54139806c112
+        addedTimestamp: 2022-03-03T17:00:04.793Z
     User:
       type: object
       properties:

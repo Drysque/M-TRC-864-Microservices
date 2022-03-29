@@ -25,44 +25,30 @@ module.exports = router;
 
 /**
  * @swagger
- * /file/:
+ * /file:
  *   post:
- *     summary: Access a file from its access token
- *     description: Access a file from its access token
+ *     summary: Upload a file.
+ *     description: Create a file.
+ *     consumes:
+ *       - multipart/form-data
  *     tags: [File]
  *     security:
- *       - bearerAuth: []
+ *        - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             required:
  *               - name
- *               - email
- *               - password
- *               - birthDate
+ *               - file
  *             properties:
  *               name:
  *                 type: string
- *               email:
+ *               file:
  *                 type: string
- *                 format: email
- *                 description: must be unique
- *               password:
- *                 type: string
- *                 format: password
- *                 minLength: 8
- *                 description: At least one number and one letter
- *               birthDate:
- *                 type: string
- *                 format: date
- *             example:
- *               name: fake name
- *               email: fake@example.com
- *               password: password1
- *               birthDate: 02/01/1999
+ *                 format: binary
  *     responses:
  *       "200":
  *         description: OK
