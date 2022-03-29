@@ -5,10 +5,10 @@ import { User } from './auth';
 const extendedApi = backendApi.injectEndpoints({
 	endpoints: (builder) => ({
 		getUser: builder.query<User, void>({
-			query: () => '/users/self',
+			query: () => '/users/me',
 			providesTags: ['User'],
 		}),
 	}),
 });
 
-export const { useGetUserQuery, useLazyGetUserQuery } = extendedApi;
+export const { useGetUserQuery } = extendedApi;
