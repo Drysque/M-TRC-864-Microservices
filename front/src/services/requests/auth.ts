@@ -1,17 +1,13 @@
 import { backendApi } from 'services/apiService';
 
+import { User } from './user';
+
 type AuthLoginRequest = {
 	email: string;
 	password: string;
 };
 
 type AuthRegisterRequest = AuthLoginRequest & {
-	name: string;
-};
-
-export type User = {
-	id: string;
-	email: string;
 	name: string;
 };
 

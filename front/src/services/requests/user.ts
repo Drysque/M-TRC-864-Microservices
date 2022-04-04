@@ -1,6 +1,10 @@
 import { backendApi } from 'services/apiService';
 
-import { User } from './auth';
+export type User = {
+	id: string;
+	email: string;
+	name: string;
+};
 
 const extendedApi = backendApi.injectEndpoints({
 	endpoints: (builder) => ({
