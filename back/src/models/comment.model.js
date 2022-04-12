@@ -12,6 +12,11 @@ const commentSchema = mongoose.Schema(
       ref: 'User',
       required: true,
     },
+    post: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: 'Post',
+      required: true,
+    },
     addedTimestamp: {
       type: Date,
       default: Date.now(),

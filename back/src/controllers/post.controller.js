@@ -2,10 +2,11 @@ const httpStatus = require('http-status');
 const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
-const { postService } = require('../services');
+const { postService, commentService } = require('../services');
 
 const addPost = catchAsync(async (req, res) => {
   const result = await postService.addPost(req.body, req.user);
+  //const file = 
   res.status(httpStatus.OK).send(result);
 });
 
@@ -18,7 +19,8 @@ const getPost = catchAsync(async (req, res) => {
 
 const getPostById = catchAsync(async (req, res) => {
   const post = await postService.getPostById(req.params.postId)
-  res.send(post);
+  const messages = await commentService.findComments({ post: req.params.postId }, 'addedTimestamp-desc');
+  res.send({ post: post, messages: messages});
 });
 
 const updatePost = catchAsync(async (req, res) => {
@@ -41,6 +43,27 @@ const deletePost = catchAsync(async (req, res) => {
   }
 });
 
+const getPostMessages = catchAsync(async (req, res) => {
+  const post = await postService.getPostById(req.params.postId)
+
+  if (post == undefined) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Post not found');
+  }
+
+  const messages = await commentService.findComments({ post: req.params.postId }, 'addedTimestamp-desc' );
+  res.send({ messages: messages });
+});
+
+const addMessageOnPost = catchAsync(async (req, res) => {
+  const post = await postService.getPostById(req.params.postId)
+
+  if (post == undefined) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Post not found');
+  }
+
+  const newMessage = await commentService.addComment({ body: req.body.message, post: req.params.postId }, req.user);
+  res.send(newMessage);
+});
 
 module.exports = {
   addPost,
@@ -48,4 +71,6 @@ module.exports = {
   getPostById,
   updatePost,
   deletePost,
+  getPostMessages,
+  addMessageOnPost,
 };

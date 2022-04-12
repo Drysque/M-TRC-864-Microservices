@@ -3,9 +3,9 @@ const { objectId } = require('./custom.validation');
 
 const addPost = {
   body: Joi.object().keys({
-    title: Joi.string().required(),
     description: Joi.string().required(),
   }),
+  files: Joi.object().required(),
 };
 
 const getPost = {
@@ -28,7 +28,6 @@ const updatePost = {
     postId: Joi.string().required().custom(objectId),
   }),
   body: Joi.object().keys({
-    title: Joi.string(),
     description: Joi.string(),
   }),
 };
@@ -39,10 +38,27 @@ const deletePost = {
   }),
 };
 
+const getPostMessages = {
+  params: Joi.object().keys({
+    postId: Joi.string().required().custom(objectId),
+  }),
+};
+
+const addMessageOnPost = {
+  params: Joi.object().keys({
+    postId: Joi.string().required().custom(objectId),
+  }),
+  body: Joi.object().keys({
+    message: Joi.string().required(),
+  }),
+};
+
 module.exports = {
   addPost,
   getPost,
   getPostById,
   updatePost,
   deletePost,
+  getPostMessages,
+  addMessageOnPost,
 };

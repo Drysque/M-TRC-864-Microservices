@@ -3,10 +3,6 @@ const { toJSON, paginate } = require('./plugins');
 
 const postSchema = mongoose.Schema(
   {
-    title: {
-      type: String,
-      required: true,
-    },
     description: {
       type: String,
     },
@@ -15,9 +11,9 @@ const postSchema = mongoose.Schema(
       ref: 'User',
       required: true,
     },
-    comments: {
-      type: [mongoose.SchemaTypes.ObjectId],
-      ref: 'Comment',
+    file: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: 'File',
     },
     addedTimestamp: {
       type: Date,
