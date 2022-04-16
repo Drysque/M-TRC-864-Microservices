@@ -8,6 +8,7 @@ const passport = require('passport');
 const httpStatus = require('http-status');
 const config = require('./config/config');
 const morgan = require('./config/morgan');
+const fileUpload = require('express-fileupload');
 const { jwtStrategy } = require('./config/passport');
 const { authLimiter } = require('./middlewares/rateLimiter');
 const routes = require('./routes/v1');
@@ -29,6 +30,11 @@ app.use(express.json({ limit: '500mb', extended: true}));
 
 // parse urlencoded request body
 app.use(express.urlencoded({ extended: true, limit: '500mb' }));
+
+// enable files upload
+app.use(fileUpload({
+  createParentPath: true
+}));
 
 // sanitize request data
 app.use(xss());

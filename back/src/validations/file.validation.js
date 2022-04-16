@@ -8,9 +8,7 @@ const getFile = {
 };
 
 const uploadFile = {
-  body: Joi.object().keys({
-    //fileName
-  }),
+  file: Joi.string().required(),
 };
 
 module.exports = {
