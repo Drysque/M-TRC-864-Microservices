@@ -15,12 +15,15 @@ const addPost = catchAsync(async (req, res) => {
 });
 
 const getPost = catchAsync(async (req, res) => {
-  const result = await postService.findPosts({}, { addedTimestamp: 'asc'});
+  const result = await postService.findPosts({}, { addedTimestamp: 'desc'});
   res.send(result);
 });
 
 const getPostById = catchAsync(async (req, res) => {
   const post = await postService.getPostById(req.params.postId)
+  if (post == undefined) {
+    throw new ApiError(404, 'Post not found.');
+  }
   const messages = await commentService.findComments({ post: req.params.postId }, 'addedTimestamp-desc');
   res.send({ post: post, messages: messages});
 });
