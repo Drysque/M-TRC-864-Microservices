@@ -8,15 +8,6 @@ const addPost = {
   files: Joi.object().required(),
 };
 
-const getPost = {
-  query: Joi.object().keys({
-    role: Joi.string(),
-    sortBy: Joi.string(),
-    limit: Joi.number().integer(),
-    page: Joi.number().integer(),
-  }),
-};
-
 const getPostById = {
   params: Joi.object().keys({
     postId: Joi.string().required().custom(objectId),
@@ -55,7 +46,6 @@ const addMessageOnPost = {
 
 module.exports = {
   addPost,
-  getPost,
   getPostById,
   updatePost,
   deletePost,

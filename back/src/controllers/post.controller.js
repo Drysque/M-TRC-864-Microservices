@@ -15,9 +15,7 @@ const addPost = catchAsync(async (req, res) => {
 });
 
 const getPost = catchAsync(async (req, res) => {
-  const filter = {};
-  const options = pick(req.query, ['sortBy', 'limit', 'page']);
-  const result = await postService.queryPosts(filter, options);
+  const result = await postService.findPosts({}, { addedTimestamp: 'desc'});
   res.send(result);
 });
 
