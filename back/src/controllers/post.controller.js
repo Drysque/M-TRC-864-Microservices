@@ -2,11 +2,15 @@ const httpStatus = require('http-status');
 const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
-const { postService, commentService } = require('../services');
+const { postService, commentService, fileService } = require('../services');
 
 const addPost = catchAsync(async (req, res) => {
-  const result = await postService.addPost(req.body, req.user);
-  //const file = 
+  const file = await fileService.uploadFile(req.files);
+  const postBody = {
+    file: `localhost:80/imageCompressor/?Id=${file.accessToken}`,
+    description: req.body.description,
+  };
+  const result = await postService.addPost(postBody, req.user);
   res.status(httpStatus.OK).send(result);
 });
 

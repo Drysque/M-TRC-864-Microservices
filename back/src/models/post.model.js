@@ -12,8 +12,8 @@ const postSchema = mongoose.Schema(
       required: true,
     },
     file: {
-      type: mongoose.SchemaTypes.ObjectId,
-      ref: 'File',
+      type: String,
+      required: true,
     },
     addedTimestamp: {
       type: Date,
