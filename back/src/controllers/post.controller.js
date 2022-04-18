@@ -15,7 +15,7 @@ const addPost = catchAsync(async (req, res) => {
 });
 
 const getPost = catchAsync(async (req, res) => {
-  const result = await postService.findPosts({}, { addedTimestamp: 'desc'});
+  const result = await postService.findPosts({}, { addedTimestamp: 'asc'});
   res.send(result);
 });
 
@@ -27,7 +27,7 @@ const getPostById = catchAsync(async (req, res) => {
 
 const updatePost = catchAsync(async (req, res) => {
   try {
-    const post = await postService.updatePost(req.params.partyId, req.body, req.user);
+    const post = await postService.updatePost(req.params.postId, req.body, req.user);
 
     res.send(post);
   } catch (e) {
@@ -37,7 +37,7 @@ const updatePost = catchAsync(async (req, res) => {
 
 const deletePost = catchAsync(async (req, res) => {
   try {
-    const post = await postService.deletePost(req.params.partyId, req.user);
+    const post = await postService.deletePost(req.params.postId, req.user);
 
     res.send(post);
   } catch (e) {

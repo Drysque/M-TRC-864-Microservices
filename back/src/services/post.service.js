@@ -75,7 +75,12 @@ const queryPosts = async (filter, options) => {
  * @returns {Promise<QueryResult>}
  */
 const findPosts = async (filter, sort) => {
-  const posts = await Post.find(filter).sort(sort);
+  const populateQuery = {
+    path: 'user',
+    model: 'User',
+    select: '_id name'
+  };
+  const posts = await Post.find(filter).populate(populateQuery).sort(sort);
   return posts;
 };
 
@@ -89,7 +94,12 @@ const findPosts = async (filter, sort) => {
  * @returns {Promise<QueryResult>}
  */
 const getPostById = async (postId) => {
-  const post = await Post.findById(postId);
+  const populateQuery = {
+    path: 'user',
+    model: 'User',
+    select: '_id name'
+  };
+  const post = await Post.findById(postId).populate(populateQuery);
   return post;
 };
 
