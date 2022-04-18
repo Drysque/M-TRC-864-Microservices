@@ -28,8 +28,6 @@ export const New = (): JSX.Element => {
 	const [createPost, { isSuccess, isError }] = useCreateNewPostMutation();
 	const toast = useToast();
 
-	// useEffect(() => console.dir(toto), [toto]);
-
 	const { isOpen, onClose: onModalClose, onOpen } = useDisclosure();
 	const [submitted, setSubmitted] = useState(false);
 
@@ -47,12 +45,13 @@ export const New = (): JSX.Element => {
 	useEffect(() => {
 		setDescription('');
 		setFile(undefined);
-		setSubmitted(false);
-		onModalClose();
-	}, [isSuccess, onModalClose]);
+		onClose();
+	}, [isSuccess, onClose, onModalClose]);
 
 	useEffect(() => {
-		isError && toast({ title: 'An error occured', status: 'error' });
+		if (isError) {
+			toast({ title: 'An error occured', status: 'error' });
+		}
 	}, [toast, isError]);
 
 	const onSubmit = useCallback(

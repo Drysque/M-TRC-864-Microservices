@@ -1,35 +1,50 @@
 import { backendApi } from 'services/apiService';
 
-export type Post = {
-	title: string;
+type Post = {
+	post: {
+		description: string;
+		user: string;
+		id: string;
+		file: string;
+	};
+	messages: Message[];
+};
+
+type DeletePost = {
+	id: string;
+};
+
+type UpdatePost = {
 	description: string;
-	user: string;
-};
-
-export type DeletePost = {
 	id: string;
 };
 
-export type GetMessages = {
+type GetPost = {
 	id: string;
 };
 
-export type Message = {
+type Message = {
+	id: string;
 	body: string;
 	user: string;
 };
 
-export type AddMessage = {
+type AddMessage = {
 	message: string;
 	id: string;
 };
 
 const extendedApi = backendApi.injectEndpoints({
 	endpoints: (builder) => ({
-		getAllPosts: builder.query<Post[], void>({
-			query: (body) => ({
+		getAllPosts: builder.query<Post['post'][], void>({
+			query: () => ({
 				url: `/posts`,
-				body,
+			}),
+			providesTags: ['Posts'],
+		}),
+		getPost: builder.query<Post, GetPost>({
+			query: ({ id }) => ({
+				url: `/posts/${id}`,
 			}),
 			providesTags: ['Posts'],
 		}),
@@ -37,32 +52,41 @@ const extendedApi = backendApi.injectEndpoints({
 			query: (body) => ({
 				url: `/posts`,
 				body,
-				headers: { 'Content-Type': 'multipart/form-data' },
 				method: 'POST',
 			}),
 			invalidatesTags: ['Posts'],
 		}),
+		updatePost: builder.mutation<void, UpdatePost>({
+			query: ({ id, ...body }) => ({
+				url: `/posts/${id}`,
+				method: 'PATCH',
+				body,
+			}),
+			invalidatesTags: ['Posts'],
+		}),
 		deletePost: builder.mutation<void, DeletePost>({
-			query: (params) => ({
-				url: `/posts/${params.id}`,
+			query: ({ id }) => ({
+				url: `/posts/${id}`,
 				method: 'DELETE',
 			}),
 			invalidatesTags: ['Posts'],
 		}),
-		getPostMessages: builder.query<Message[], GetMessages>({
-			query: (params) => ({
-				url: `/posts/${params.id}/message`,
-			}),
-			providesTags: ['Posts'],
-		}),
-		addPostMessage: builder.query<void, AddMessage>({
+		addPostMessage: builder.mutation<void, AddMessage>({
 			query: ({ id, ...body }) => ({
 				url: `/posts/${id}/message`,
 				body,
+				method: 'POST',
 			}),
-			providesTags: ['Posts'],
+			invalidatesTags: ['Posts'],
 		}),
 	}),
 });
 
-export const { useGetAllPostsQuery, useCreateNewPostMutation } = extendedApi;
+export const {
+	useGetAllPostsQuery,
+	useCreateNewPostMutation,
+	useAddPostMessageMutation,
+	useDeletePostMutation,
+	useGetPostQuery,
+	useUpdatePostMutation,
+} = extendedApi;

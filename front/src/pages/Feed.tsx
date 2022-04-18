@@ -1,32 +1,57 @@
-import { Image, VStack, Wrap, WrapItem } from '@chakra-ui/react';
+import { ArrowBackIcon, RepeatIcon } from '@chakra-ui/icons';
+import {
+	Alert,
+	AlertDescription,
+	AlertIcon,
+	AlertTitle,
+	Button,
+	CloseButton,
+	HStack,
+	IconButton,
+	Image,
+	Spinner,
+	Text,
+	VStack,
+	Wrap,
+	WrapItem,
+} from '@chakra-ui/react';
 import { useHistory } from 'react-router-dom';
-// import { useGetAllPostsQuery } from 'services/requests/posts';
+import { useGetAllPostsQuery } from 'services/requests/posts';
 
 export const Feed = (): JSX.Element => {
-	const posts = [
-		{ id: '1', url: 'https://via.placeholder.com/300x200' },
-		{ id: '2', url: 'https://via.placeholder.com/150x600' },
-		{ id: '3', url: 'https://via.placeholder.com/30x20' },
-		{ id: '4', url: 'https://via.placeholder.com/50x60' },
-		{ id: '5', url: 'https://via.placeholder.com/100x30' },
-		{ id: '6', url: 'https://via.placeholder.com/560' },
-		{ id: '7', url: 'https://via.placeholder.com/300' },
-		{ id: '8', url: 'https://via.placeholder.com/500' },
-		{ id: '9', url: 'https://via.placeholder.com/50' },
-		{ id: '10', url: 'https://via.placeholder.com/50x70' },
-		{ id: '11', url: 'https://via.placeholder.com/400x1000' },
-	];
 	const history = useHistory();
-	// const { data: qposts } = useGetAllPostsQuery();
+	const { data: posts, isError, refetch: retry } = useGetAllPostsQuery();
 
-	// console.log(qposts); // sort by time
+	if (isError)
+		return (
+			<Alert status="error">
+				<AlertIcon />
+				<AlertTitle mr={2}>An error occured</AlertTitle>
+				<AlertDescription>
+					<HStack>
+						<Text>Could not get posts</Text>
+						<Button
+							variant="link"
+							textDecoration="underline"
+							color="pantoufle.secondary"
+							rightIcon={<RepeatIcon />}
+							onClick={retry}
+						>
+							Retry
+						</Button>
+					</HStack>
+				</AlertDescription>
+			</Alert>
+		);
+
+	if (!posts) return <Spinner />;
 
 	return (
 		<VStack>
 			<Wrap align="center" justify="center">
 				{posts.map((p) => (
 					<WrapItem key={p.id}>
-						<Image h="200px" src={p.url} onClick={() => history.push(`/post/${p.id}`)} cursor="pointer" />
+						<Image h="200px" src={`http://${p.file}`} onClick={() => history.push(`/post/${p.id}`)} cursor="pointer" />
 					</WrapItem>
 				))}
 			</Wrap>

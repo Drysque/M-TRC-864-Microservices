@@ -12,26 +12,49 @@ import {
 	Input,
 	HStack,
 	IconButton,
+	Spinner,
+	useToast,
+	Button,
+	useDisclosure,
 } from '@chakra-ui/react';
-import { useCallback, useEffect, useState } from 'react';
-// import { useParams } from 'react-router-dom';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 
-// import { Post as PostType } from 'services/requests/posts';
+import { useGetUserQuery } from 'services/requests/auth';
+import { useAddPostMessageMutation, useGetPostQuery } from 'services/requests/posts';
+import { UpdatePost } from 'pages/UpdatePost';
 
 export const Post = (): JSX.Element => {
-	const post /* : PostType */ = { id: '1', url: 'https://via.placeholder.com/300x200' };
+	const { id } = useParams<{ id: string }>();
+	const { isOpen: isUpdateModalOpen, onClose: onUpdateModalClose, onOpen: onUpdateModelOpen } = useDisclosure();
+	const [addMessage, { isError: isAddMessageError, isSuccess: isAddMessageSuccess }] = useAddPostMessageMutation();
 
-	// const params = useParams();
+	const { data: user } = useGetUserQuery();
+	const { isError: isGetPostError, data: post } = useGetPostQuery({ id });
+	const history = useHistory();
+	const toast = useToast();
 
-	// useEffect(() => {
-	// 	console.log(params);
-	// }, [params]);
+	useEffect(() => {
+		if (isGetPostError) {
+			toast({ status: 'error', title: 'This post does not exist' });
+			history.push('/');
+		}
+	}, [history, isGetPostError, toast]);
 
-	const messages = [
-		'hello',
-		'this is a nice pic',
-		'blablabla long text blablabla long text blablabla long text blablabla long text blablabla long text blablabla long text blablabla long textblablabla long text blablabla long textblablabla long text blablabla long text',
-	];
+	useEffect(() => {
+		if (isAddMessageError) {
+			toast({ status: 'error', title: 'Could not post message' });
+		}
+	}, [isAddMessageError, toast]);
+
+	useEffect(() => {
+		if (isAddMessageSuccess) {
+			setComment('');
+			setSubmitted(false);
+		}
+	}, [isAddMessageSuccess, toast]);
+
+	const isAuthor = useMemo(() => post?.post.user === user?.id, [post, user]);
 
 	const [submitted, setSubmitted] = useState(false);
 
@@ -42,15 +65,29 @@ export const Post = (): JSX.Element => {
 		(e) => {
 			setSubmitted(true);
 			e.preventDefault();
-			if (!isCommentError) alert(comment);
+			if (!isCommentError) {
+				addMessage({
+					id,
+					message: comment,
+				});
+			}
 		},
-		[comment, isCommentError],
+		[addMessage, comment, id, isCommentError],
 	);
+
+	if (!post) return <Spinner />;
 
 	return (
 		<Center m="8px">
-			<VStack maxW="50%">
-				<Image h="500px" src={post.url} />
+			<VStack maxW="50%" spacing="8px">
+				<Text fontSize="18px" fontWeight={600}>
+					{post.post.description}
+				</Text>
+				<Image h="500px" src={`http://${post.post.file}`} />
+
+				{isAuthor && <Button onClick={onUpdateModelOpen}>Edit post</Button>}
+				<UpdatePost isOpen={isUpdateModalOpen} onClose={onUpdateModalClose} />
+
 				<form onSubmit={onSubmit}>
 					<VStack
 						align="start"
@@ -59,16 +96,16 @@ export const Post = (): JSX.Element => {
 						bg="pantoufle.bg"
 						p="16px 32px"
 					>
-						{messages.map((m) => (
+						{post.messages.map((m) => (
 							<Text
-								key={m}
+								key={m.id}
 								p="4px 8px"
 								border="1px solid"
 								borderRadius="base"
 								borderColor="pantoufle.secondary"
 								borderBottomLeftRadius="0px"
 							>
-								{m}
+								{m.body}
 							</Text>
 						))}
 
@@ -88,11 +125,12 @@ export const Post = (): JSX.Element => {
 									aria-label="Send comment"
 									_hover={{ bg: 'pantoufle.accent' }}
 									borderLeftRadius="0"
+									type="submit"
 									icon={<ArrowForwardIcon color="pantoufle.secondary" />}
 								/>
 							</HStack>
 							<FormHelperText>What do you have to say</FormHelperText>
-							<FormErrorMessage>A title is required</FormErrorMessage>
+							<FormErrorMessage>A comment is required</FormErrorMessage>
 						</FormControl>
 					</VStack>
 				</form>

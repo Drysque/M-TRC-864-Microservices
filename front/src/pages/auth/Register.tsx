@@ -86,7 +86,7 @@ export const Register = (): JSX.Element => {
 									onClick={toggleShowPassword}
 									bg="pantoufle.accent"
 									colorScheme="yellow"
-									aria-label="Search database"
+									aria-label="Hide password"
 									icon={showPassword ? <ViewIcon /> : <ViewOffIcon />}
 								/>
 							</InputRightElement>
