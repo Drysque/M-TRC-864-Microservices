@@ -3,32 +3,26 @@ import { BrowserRouter as Router, Redirect, Switch, Route } from 'react-router-d
 import { Header } from 'components/Header';
 import { Home } from 'pages/Home';
 import { Profile } from 'pages/Profile';
+import { Login } from 'pages/auth/Login';
+import { Register } from 'pages/auth/Register';
+import { Feed } from 'pages/Feed';
 
 import { PrivateRoute } from './PrivateRoute';
 
 export const Routes = (): JSX.Element => (
-  <Router>
-    <Header />
+	<Router>
+		<Header />
+		<Switch>
+			<Route exact path="/login" component={Login} />
+			<Route exact path="/register" component={Register} />
 
-    <Switch>
-      {/* <Route path="/auth">
-            <AuthLayout>
-                <Switch>
-                    <Route path="/auth/cgp" component={CgpAuth} />
-                    <Redirect push to="/auth/login" />
-                </Switch>
-            </AuthLayout>
-        </Route> */}
+			<Route exact path="/" component={Home} />
 
-      {/* <Route path="/validate-email/:token">
-            <AuthLayout>
-                <ApplyValidate />
-            </AuthLayout>
-        </Route> */}
+			{/* {isError && <Redirect push to="/" />} */}
 
-      <PrivateRoute path="/profile" component={Profile} />
-      <Route exact path="/" component={Home} />
-      <Redirect push to="/" />
-    </Switch>
-  </Router>
+			<PrivateRoute exact path="/profile" component={Profile} />
+			<PrivateRoute exact path="/feed" component={Feed} />
+			<Redirect push to="/" />
+		</Switch>
+	</Router>
 );

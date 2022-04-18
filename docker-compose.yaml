@@ -20,6 +20,7 @@ services:
     ports:
       - '3001:3001'
     depends_on:
+      - imagecompressor
       - mongodb
     volumes:
       - ./back:/usr/src/node-app
@@ -31,12 +32,12 @@ services:
   imagecompressor:
     build:
       context: ./image-compressor
-      dockerfile: ./image-compressor/Dockerfile
+      dockerfile: ./Dockerfile
     image: ${DOCKER_REGISTRY-}image-compressor
     ports:
       - '80:80'
     volumes:
-      - ./imagecompressor:/src
+      - ./image-compressor:/src
 
   mongodb:
     image: mongo:latest
@@ -53,9 +54,6 @@ services:
       - node-network
     env_file:
       ./back/.env
-
-volumes:
-  dbdata:
 
 networks:
   node-network:
