@@ -50,7 +50,7 @@ module.exports = router;
  *             type: object
  *             required:
  *               - description
- *               - file
+ *               - files
  *             properties:
  *               description:
  *                 type: string
@@ -75,8 +75,6 @@ module.exports = router;
  *     summary: Get all post
  *     description: Get all post
  *     tags: [Post]
- *     security:
- *       - bearerAuth: []
  *     responses:
  *       "200":
  *         description: OK
@@ -104,8 +102,6 @@ module.exports = router;
  *     summary: Get a post by id
  *     description: Get a post by id
  *     tags: [Post]
- *     security:
- *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: postId
@@ -199,8 +195,6 @@ module.exports = router;
  *     summary: Get a post messages
  *     description: Get a post messages
  *     tags: [Comment]
- *     security:
- *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: postId

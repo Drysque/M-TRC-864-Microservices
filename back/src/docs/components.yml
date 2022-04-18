@@ -6,7 +6,12 @@ components:
         body:
           type: string
         user:
-          type: string
+          type: object
+          properties:
+            name:
+              type: string
+            id:
+              type: string
         post:
           type: string
         addedTimestamp:
@@ -25,7 +30,12 @@ components:
         description:
           type: string
         user:
-          type: string
+          type: object
+          properties:
+            name:
+              type: string
+            id:
+              type: string
         comments:
           type: array
           items:
@@ -33,11 +43,6 @@ components:
         addedTimestamp:
           type: string
           format: date-time
-      example:
-        title: Yop
-        description: cc à tous
-        user: 5ebac534954b54139806c112
-        addedTimestamp: 2022-03-03T17:00:04.793Z
     User:
       type: object
       properties:

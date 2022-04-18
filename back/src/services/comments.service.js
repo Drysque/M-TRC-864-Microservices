@@ -68,7 +68,12 @@ const getCommentById = async (commentId) => {
  * @returns {Promise<QueryResult>}
  */
 const findComments = async (filter, options) => {
-  const comments = await Comment.find(filter).sort(options)
+  const populateQuery = {
+    path: 'user',
+    model: 'User',
+    select: '_id name'
+  };
+  const comments = await Comment.find(filter).populate(populateQuery).sort(options)
   return comments;
 };
 
