@@ -13,10 +13,19 @@ import {
 	HStack,
 	IconButton,
 } from '@chakra-ui/react';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+// import { useParams } from 'react-router-dom';
+
+// import { Post as PostType } from 'services/requests/posts';
 
 export const Post = (): JSX.Element => {
-	const post = { id: '1', url: 'https://via.placeholder.com/300x200' };
+	const post /* : PostType */ = { id: '1', url: 'https://via.placeholder.com/300x200' };
+
+	// const params = useParams();
+
+	// useEffect(() => {
+	// 	console.log(params);
+	// }, [params]);
 
 	const messages = [
 		'hello',
@@ -77,14 +86,12 @@ export const Post = (): JSX.Element => {
 									variant="outline"
 									borderColor="pantoufle.secondary"
 									aria-label="Send comment"
-									_hover={{
-										bg: 'pantoufle.accent',
-									}}
+									_hover={{ bg: 'pantoufle.accent' }}
 									borderLeftRadius="0"
 									icon={<ArrowForwardIcon color="pantoufle.secondary" />}
 								/>
 							</HStack>
-							{!(submitted && isCommentError) && <FormHelperText>What do you have to say</FormHelperText>}
+							<FormHelperText>What do you have to say</FormHelperText>
 							<FormErrorMessage>A title is required</FormErrorMessage>
 						</FormControl>
 					</VStack>

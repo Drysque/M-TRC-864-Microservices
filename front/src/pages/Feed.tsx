@@ -1,5 +1,6 @@
 import { Image, VStack, Wrap, WrapItem } from '@chakra-ui/react';
 import { useHistory } from 'react-router-dom';
+// import { useGetAllPostsQuery } from 'services/requests/posts';
 
 export const Feed = (): JSX.Element => {
 	const posts = [
@@ -16,6 +17,9 @@ export const Feed = (): JSX.Element => {
 		{ id: '11', url: 'https://via.placeholder.com/400x1000' },
 	];
 	const history = useHistory();
+	// const { data: qposts } = useGetAllPostsQuery();
+
+	// console.log(qposts); // sort by time
 
 	return (
 		<VStack>
