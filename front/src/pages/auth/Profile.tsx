@@ -30,22 +30,6 @@ export const Profile = (): JSX.Element => {
 				<Button onClick={logout} bg="red.400">
 					Logout
 				</Button>
-				{/* <VStack>
-				<HStack p="4px 8px" borderRadius="6px">
-				<HStack bg="blue.500" p="2px 4px" borderRadius="6px">
-				<Avatar size="sm" name="Kent Dodds" src="https://bit.ly/kent-c-dodds" />
-				<Text color="white">{user.name}</Text>
-				</HStack>
-				<Text>Content</Text>
-				</HStack>
-				<HStack p="4px 8px" borderRadius="6px">
-				<HStack bg="blue.500" p="2px 4px" borderRadius="6px">
-				<Avatar size="sm" name="Kent Dodds" src="https://bit.ly/kent-c-dodds" />
-				<Text color="white">{user.name}</Text>
-					</HStack>
-					<Text>Content</Text>
-				</HStack>
-			</VStack> */}
 			</VStack>
 		</Center>
 	);

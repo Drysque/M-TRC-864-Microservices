@@ -22,8 +22,8 @@ export const Login = (): JSX.Element => {
 	const [login, { data, isLoading, isSuccess, error }] = useLoginMutation();
 	const [fetchUser] = useLazyGetUserQuery();
 
-	const [email, setEmail] = useState<string>('aa@aa.aaa');
-	const [password, setPassword] = useState<string>('aaaaaaaa1');
+	const [email, setEmail] = useState<string>('');
+	const [password, setPassword] = useState<string>('');
 	const [showPassword, { toggle: toggleShowPassword }] = useBoolean();
 
 	useEffect(() => {

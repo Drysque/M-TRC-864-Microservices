@@ -22,9 +22,9 @@ export const Register = (): JSX.Element => {
 	const [register, { data, isLoading, isSuccess, error }] = useRegisterMutation();
 	const [fetchUser] = useLazyGetUserQuery();
 
-	const [email, setEmail] = useState<string>('aa@aa.aaa');
-	const [name, setName] = useState<string>('aaaaaaaa');
-	const [password, setPassword] = useState<string>('aaaaaaaa1');
+	const [email, setEmail] = useState<string>('');
+	const [name, setName] = useState<string>('');
+	const [password, setPassword] = useState<string>('');
 	const [showPassword, { toggle: toggleShowPassword }] = useBoolean();
 
 	useEffect(() => {
