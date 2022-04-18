@@ -1,6 +1,6 @@
 import { Button, VStack, Spinner, Center, Table, Tbody, Tr, Td } from '@chakra-ui/react';
 
-import { useGetUserQuery } from 'services/requests/user';
+import { useGetUserQuery } from 'services/requests/auth';
 
 export const Profile = (): JSX.Element => {
 	const { data: user } = useGetUserQuery();

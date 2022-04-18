@@ -14,8 +14,7 @@ import {
 import { ArrowForwardIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { Link, useHistory } from 'react-router-dom';
 
-import { useRegisterMutation } from 'services/requests/auth';
-import { useLazyGetUserQuery } from 'services/requests/user';
+import { useRegisterMutation, useLazyGetUserQuery } from 'services/requests/auth';
 
 export const Register = (): JSX.Element => {
 	const toast = useToast();

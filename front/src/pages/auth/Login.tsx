@@ -14,8 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { Link, useHistory } from 'react-router-dom';
 
-import { useLoginMutation } from 'services/requests/auth';
-import { useLazyGetUserQuery } from 'services/requests/user';
+import { useLoginMutation, useLazyGetUserQuery } from 'services/requests/auth';
 
 export const Login = (): JSX.Element => {
 	const toast = useToast();

@@ -1,6 +1,6 @@
 import { Redirect, Route } from 'react-router-dom';
 
-import { useGetUserQuery } from 'services/requests/user';
+import { useGetUserQuery } from 'services/requests/auth';
 
 interface PrivateRouteProps {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any

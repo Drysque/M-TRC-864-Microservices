@@ -3,7 +3,7 @@ import { Center, VStack, Text } from '@chakra-ui/react';
 import { PantoufleIcon } from 'assets/Pantoufle';
 import { Feed } from 'pages/Feed';
 import { New } from 'pages/New';
-import { useGetUserQuery } from 'services/requests/user';
+import { useGetUserQuery } from 'services/requests/auth';
 
 export const Home = (): JSX.Element => {
 	const { isSuccess: isLoggedIn } = useGetUserQuery();

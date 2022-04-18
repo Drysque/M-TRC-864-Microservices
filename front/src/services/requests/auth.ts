@@ -1,6 +1,10 @@
 import { backendApi } from 'services/apiService';
 
-import { User } from './user';
+export type User = {
+	id: string;
+	email: string;
+	name: string;
+};
 
 type AuthLoginRequest = {
 	email: string;
@@ -36,7 +40,11 @@ const extendedApi = backendApi.injectEndpoints({
 				body: params,
 			}),
 		}),
+		getUser: builder.query<User, void>({
+			query: () => '/users/me',
+			providesTags: ['User'],
+		}),
 	}),
 });
 
-export const { useRegisterMutation, useLoginMutation } = extendedApi;
+export const { useRegisterMutation, useLoginMutation, useGetUserQuery, useLazyGetUserQuery } = extendedApi;

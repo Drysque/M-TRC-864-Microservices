@@ -2,7 +2,7 @@ import { Avatar, Box, HStack, Text, VStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
 import { PantoufleIcon } from 'assets/Pantoufle';
-import { useGetUserQuery } from 'services/requests/user';
+import { useGetUserQuery } from 'services/requests/auth';
 
 export const Header = (): JSX.Element => {
 	const { data: user } = useGetUserQuery();
