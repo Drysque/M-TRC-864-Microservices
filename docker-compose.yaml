@@ -28,6 +28,15 @@ services:
     env_file:
       ./back/.env
 
+  imagecompressor:
+    build:
+      context: ./image-compressor
+    image: mcr.microsoft.com/dotnet/aspnet:6.0-focal
+    ports:
+      - '80:80'
+    volumes:
+      - ./imagecompressor:/src
+
   mongodb:
     image: mongo:latest
     container_name: mongodb
