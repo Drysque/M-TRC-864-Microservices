@@ -1,7 +1,6 @@
-import { ArrowForwardIcon } from '@chakra-ui/icons';
+import { ArrowForwardIcon, EditIcon } from '@chakra-ui/icons';
 import {
 	Image,
-	Center,
 	VStack,
 	Text,
 	Divider,
@@ -14,8 +13,9 @@ import {
 	IconButton,
 	Spinner,
 	useToast,
-	Button,
 	useDisclosure,
+	Wrap,
+	WrapItem,
 } from '@chakra-ui/react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
@@ -33,6 +33,11 @@ export const Post = (): JSX.Element => {
 	const { isError: isGetPostError, data: post } = useGetPostQuery({ id });
 	const history = useHistory();
 	const toast = useToast();
+
+	useEffect(() => {
+		const chatStack = document.getElementById('chat');
+		if (chatStack) chatStack.scrollTop = chatStack.scrollHeight;
+	}, [post?.messages]);
 
 	useEffect(() => {
 		if (isGetPostError) {
@@ -54,7 +59,7 @@ export const Post = (): JSX.Element => {
 		}
 	}, [isAddMessageSuccess, toast]);
 
-	const isAuthor = useMemo(() => post?.post.user === user?.id, [post, user]);
+	const isAuthor = useMemo(() => post?.post?.user?.id === user?.id, [post, user]);
 
 	const [submitted, setSubmitted] = useState(false);
 
@@ -75,66 +80,97 @@ export const Post = (): JSX.Element => {
 		[addMessage, comment, id, isCommentError],
 	);
 
-	if (!post) return <Spinner />;
+	if (!post || !post.post) return <Spinner />;
 
 	return (
-		<Center m="8px">
-			<VStack maxW="50%" spacing="8px">
+		<VStack align="start" m="8px 16px">
+			<Text>Posted by {isAuthor ? 'You' : post.post.user.name}</Text>
+			<HStack>
 				<Text fontSize="18px" fontWeight={600}>
 					{post.post.description}
 				</Text>
-				<Image h="500px" src={`http://${post.post.file}`} />
-
-				{isAuthor && <Button onClick={onUpdateModelOpen}>Edit post</Button>}
+				{isAuthor && <EditIcon cursor="pointer" onClick={onUpdateModelOpen} />}
 				<UpdatePost isOpen={isUpdateModalOpen} onClose={onUpdateModalClose} />
+			</HStack>
+			<Wrap>
+				<WrapItem>
+					<Image h="500px" src={`http://${post.post.file}`} />
+				</WrapItem>
 
-				<form onSubmit={onSubmit}>
-					<VStack
-						align="start"
-						divider={<Divider borderColor="pantoufle.primary" />}
-						w="100%"
-						bg="pantoufle.bg"
-						p="16px 32px"
-					>
-						{post.messages.map((m) => (
-							<Text
-								key={m.id}
-								p="4px 8px"
-								border="1px solid"
-								borderRadius="base"
-								borderColor="pantoufle.secondary"
-								borderBottomLeftRadius="0px"
-							>
-								{m.body}
-							</Text>
-						))}
+				<WrapItem>
+					<form onSubmit={onSubmit}>
+						<VStack
+							align="start"
+							divider={<Divider borderColor="pantoufle.primary" />}
+							w="100%"
+							bg="pantoufle.bg"
+							p="16px 32px"
+							maxH="500px"
+							overflowY="scroll"
+							id="chat"
+							maxW="400px"
+						>
+							{post.messages.map((m) => {
+								const isCommentAuthor = m.user.id === user?.id;
+								return (
+									<VStack
+										ml={isCommentAuthor ? undefined : 'auto'}
+										key={m.id}
+										align={isCommentAuthor ? 'start' : 'end'}
+									>
+										{!isCommentAuthor && (
+											<Text fontSize="10px" color="pantoufle.secondary">
+												{m.user.name}
+											</Text>
+										)}
 
-						<FormControl isInvalid={submitted && isCommentError}>
-							<FormLabel htmlFor="comment">Your Comment</FormLabel>
-							<HStack>
-								<Input
-									borderColor="pantoufle.secondary"
-									id="comment"
-									value={comment}
-									onChange={(e) => setComment(e.target.value)}
-									borderRightRadius="0px"
-								/>
-								<IconButton
-									variant="outline"
-									borderColor="pantoufle.secondary"
-									aria-label="Send comment"
-									_hover={{ bg: 'pantoufle.accent' }}
-									borderLeftRadius="0"
-									type="submit"
-									icon={<ArrowForwardIcon color="pantoufle.secondary" />}
-								/>
-							</HStack>
-							<FormHelperText>What do you have to say</FormHelperText>
-							<FormErrorMessage>A comment is required</FormErrorMessage>
-						</FormControl>
-					</VStack>
-				</form>
-			</VStack>
-		</Center>
+										<VStack
+											spacing="0px"
+											p="4px 8px"
+											border="1px solid"
+											borderRadius="base"
+											borderColor="pantoufle.secondary"
+											borderBottomLeftRadius={isCommentAuthor ? '0px' : 'base'}
+											borderBottomRightRadius={isCommentAuthor ? 'base' : '0px'}
+											align={isCommentAuthor ? 'start' : 'end'}
+										>
+											<Text fontSize="10px" color="pantoufle.secondary">
+												{new Date(m.addedTimestamp).toLocaleString('fr-FR')}
+											</Text>
+
+											<Text wordBreak="break-all">{m.body}</Text>
+										</VStack>
+									</VStack>
+								);
+							})}
+
+							<FormControl isInvalid={submitted && isCommentError}>
+								<FormLabel htmlFor="comment">Your Comment</FormLabel>
+								<HStack>
+									<Input
+										borderColor="pantoufle.secondary"
+										id="comment"
+										value={comment}
+										onChange={(e) => setComment(e.target.value)}
+										borderRightRadius="0px"
+									/>
+									<IconButton
+										variant="outline"
+										borderColor="pantoufle.secondary"
+										aria-label="Send comment"
+										_hover={{ bg: 'pantoufle.accent' }}
+										borderLeftRadius="0"
+										type="submit"
+										icon={<ArrowForwardIcon color="pantoufle.secondary" />}
+									/>
+								</HStack>
+								<FormHelperText>What do you have to say</FormHelperText>
+								<FormErrorMessage>A comment is required</FormErrorMessage>
+							</FormControl>
+						</VStack>
+					</form>
+				</WrapItem>
+			</Wrap>
+		</VStack>
 	);
 };

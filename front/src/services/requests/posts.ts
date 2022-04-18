@@ -3,7 +3,7 @@ import { backendApi } from 'services/apiService';
 type Post = {
 	post: {
 		description: string;
-		user: string;
+		user: { name: string; id: string };
 		id: string;
 		file: string;
 	};
@@ -26,7 +26,8 @@ type GetPost = {
 type Message = {
 	id: string;
 	body: string;
-	user: string;
+	user: { name: string; id: string };
+	addedTimestamp: string;
 };
 
 type AddMessage = {

@@ -17,7 +17,7 @@ import {
 	useToast,
 } from '@chakra-ui/react';
 import { useState, useCallback, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useDeletePostMutation, useGetPostQuery, useUpdatePostMutation } from 'services/requests/posts';
 
 export type UpdatePostProps = {
@@ -29,6 +29,7 @@ export const UpdatePost = ({ isOpen, onClose: onModalClose }: UpdatePostProps): 
 	const [submitted, setSubmitted] = useState(false);
 	const toast = useToast();
 	const { id } = useParams<{ id: string }>();
+	const history = useHistory();
 
 	const [description, setDescription] = useState('');
 	const isDescriptionError = description.length === 0;
@@ -58,8 +59,9 @@ export const UpdatePost = ({ isOpen, onClose: onModalClose }: UpdatePostProps): 
 		if (isDeleteSuccess) {
 			toast({ title: 'Success', description: 'Post deleted', status: 'success' });
 			onClose();
+			history.push('/');
 		}
-	}, [isDeleteSuccess, onClose, toast]);
+	}, [history, isDeleteSuccess, onClose, toast]);
 
 	useEffect(() => {
 		if (isUpdateSuccess) {
