@@ -69,6 +69,17 @@ const queryPosts = async (filter, options) => {
 };
 
 /**
+ * Find posts
+ * @param {Object} filter - Mongo filter
+ * @param {Object} options - Query options
+ * @returns {Promise<QueryResult>}
+ */
+const findPosts = async (filter, sort) => {
+  const posts = await Post.find(filter).sort(sort);
+  return posts;
+};
+
+/**
  * Query for posts
  * @param {Object} filter - Mongo filter
  * @param {Object} options - Query options
@@ -88,4 +99,5 @@ module.exports = {
   deletePost,
   updatePost,
   getPostById,
+  findPosts,
 };
