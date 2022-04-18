@@ -31,7 +31,8 @@ services:
   imagecompressor:
     build:
       context: ./image-compressor
-    image: mcr.microsoft.com/dotnet/aspnet:6.0-focal
+      dockerfile: ./image-compressor/Dockerfile
+    image: ${DOCKER_REGISTRY-}image-compressor
     ports:
       - '80:80'
     volumes:
