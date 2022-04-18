@@ -10,7 +10,9 @@ const uploadFile = catchAsync(async (req, res) => {
 });
 
 const getFile = catchAsync(async (req, res) => {
-  res.send({});
+  const file = await fileService.findFileByAccessToken(req.params.fileToken);
+
+  res.send(file);
 });
 
 module.exports = {

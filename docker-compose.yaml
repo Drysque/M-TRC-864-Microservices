@@ -34,6 +34,8 @@ services:
       context: ./image-compressor
       dockerfile: ./Dockerfile
     image: ${DOCKER_REGISTRY-}image-compressor
+    networks:
+      - node-network
     ports:
       - '80:80'
     volumes:
