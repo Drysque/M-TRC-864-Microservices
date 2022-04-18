@@ -19,8 +19,6 @@ export const Routes = (): JSX.Element => (
 			<Route exact path="/" component={Home} />
 			<Route exact path="/post/:id" component={Post} />
 
-			{/* {isError && <Redirect push to="/" />} */}
-
 			<PrivateRoute exact path="/profile" component={Profile} />
 			<Redirect push to="/" />
 		</Switch>

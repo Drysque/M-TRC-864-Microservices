@@ -1,13 +1,11 @@
-import { ArrowBackIcon, RepeatIcon } from '@chakra-ui/icons';
+import { RepeatIcon } from '@chakra-ui/icons';
 import {
 	Alert,
 	AlertDescription,
 	AlertIcon,
 	AlertTitle,
 	Button,
-	CloseButton,
 	HStack,
-	IconButton,
 	Image,
 	Spinner,
 	Text,
