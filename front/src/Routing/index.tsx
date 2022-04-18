@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Redirect, Switch, Route } from 'react-router-d
 
 import { Header } from 'components/Header';
 import { Home } from 'pages/Home';
-import { Profile } from 'pages/Profile';
+import { Profile } from 'pages/auth/Profile';
 import { Login } from 'pages/auth/Login';
 import { Register } from 'pages/auth/Register';
 import { Post } from 'pages/Post';
