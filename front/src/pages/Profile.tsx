@@ -27,7 +27,7 @@ export const Profile = (): JSX.Element => {
 						</Tr>
 					</Tbody>
 				</Table>
-				<Button onClick={logout} variant="solid" bg="red.400" color="white">
+				<Button onClick={logout} bg="red.400">
 					Logout
 				</Button>
 				{/* <VStack>

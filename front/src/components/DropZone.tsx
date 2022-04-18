@@ -1,5 +1,5 @@
 import { useDropzone, DropzoneOptions } from 'react-dropzone';
-import { Box, VStack, Text, Center } from '@chakra-ui/react';
+import { Box, VStack, Text, HStack } from '@chakra-ui/react';
 import { CheckIcon, DownloadIcon } from '@chakra-ui/icons';
 
 type DropZoneProps = {
@@ -15,23 +15,24 @@ const DropZone = ({ fileUploaded, ...options }: DropZoneProps & DropzoneOptions)
 	});
 
 	return (
-		<Box {...getRootProps()} cursor="pointer" w="70%">
+		<Box {...getRootProps()} cursor="pointer">
 			<input type="file" {...getInputProps()} />
-			<Box h="228px" borderRadius="10px" bgColor="#F1F1F1" p="10px" minW="200px">
-				<Box borderRadius="10px" border="1px dashed black" h="100%" p="30px">
-					<Center h="100%">
-						<VStack align="center" spacing="27px">
+			<Box borderRadius="10px" bgColor="#F1F1F1" p="10px">
+				<Box borderRadius="10px" border="1px dashed black" p="18px">
+					<VStack spacing="12px">
+						<HStack>
 							{fileUploaded ? <CheckIcon /> : <DownloadIcon />}
+
 							<Text fontSize="12px" fontWeight={600} align="center">
 								{fileUploaded ? fileUploaded.name : 'Drag your picture here'}
 							</Text>
-							{!fileUploaded && (
-								<Text fontSize="12px" opacity="0.5" align="center">
-									or browse your pictures
-								</Text>
-							)}
-						</VStack>
-					</Center>
+						</HStack>
+						{!fileUploaded && (
+							<Text fontSize="12px" opacity="0.5" align="center">
+								or browse your pictures
+							</Text>
+						)}
+					</VStack>
 				</Box>
 			</Box>
 		</Box>
