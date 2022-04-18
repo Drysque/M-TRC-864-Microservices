@@ -33,7 +33,7 @@ export const Register = (): JSX.Element => {
 		if (isSuccess && data) {
 			localStorage.setItem('token', data.tokens.access.token);
 			fetchUser();
-			history.push('/profile'); // force reload
+			history.push('/feed'); // force reload
 		} else if (error) {
 			if ('status' in error) {
 				toast({

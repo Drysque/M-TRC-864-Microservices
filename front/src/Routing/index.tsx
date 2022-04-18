@@ -5,6 +5,7 @@ import { Home } from 'pages/Home';
 import { Profile } from 'pages/Profile';
 import { Login } from 'pages/auth/Login';
 import { Register } from 'pages/auth/Register';
+import { Feed } from 'pages/Feed';
 
 import { PrivateRoute } from './PrivateRoute';
 
@@ -20,6 +21,7 @@ export const Routes = (): JSX.Element => (
 			{/* {isError && <Redirect push to="/" />} */}
 
 			<PrivateRoute exact path="/profile" component={Profile} />
+			<PrivateRoute exact path="/feed" component={Feed} />
 			<Redirect push to="/" />
 		</Switch>
 	</Router>
