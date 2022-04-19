@@ -36,7 +36,7 @@ List of available routes:
 `POST /v1/auth/register` - register\
 `POST /v1/auth/login` - login\
 `POST /v1/auth/logout` - logout\
-`POST /v1/auth/refresh-tokens` - refresh auth tokens\
+`POST /v1/auth/refresh-tokens` - refresh auth tokens
 
 **User routes**:\
 `GET /v1/users` - get all users\
@@ -52,7 +52,7 @@ List of available routes:
 `PATCH /v1/posts/:postId` - update a post\
 `DELETE /v1/posts/:postId` - delete a post\
 `GET /v1/posts/:postId/message` - get all messages of a post\
-`POST /v1/posts/:postId/message` - Add a message to a post\
+`POST /v1/posts/:postId/message` - Add a message to a post
 
 
 ## Image Compressor
